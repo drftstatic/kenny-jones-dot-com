@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { AUDIO_PREF_UPDATED_EVENT, readAudioEnabledPreference, writeAudioEnabledPreference } from '@/lib/audioPreferences';
 import { aboutBioParagraphs, aboutSidebarDetails, scarFaqAnswers, scarFaqQuestion } from '@/lib/content';
 
 const scarRegex = /(scar|neck)/gi;
@@ -23,11 +24,27 @@ export default function AboutPage() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
+    const syncAudioPreference = () => {
+      setMuted(!readAudioEnabledPreference(false));
+    };
+
+    syncAudioPreference();
+    window.addEventListener('storage', syncAudioPreference);
+    window.addEventListener(AUDIO_PREF_UPDATED_EVENT, syncAudioPreference);
+
     return () => {
+      window.removeEventListener('storage', syncAudioPreference);
+      window.removeEventListener(AUDIO_PREF_UPDATED_EVENT, syncAudioPreference);
       audioRef.current?.pause();
       audioRef.current = null;
     };
   }, []);
+
+  const toggleMuted = () => {
+    const nextMutedValue = !muted;
+    setMuted(nextMutedValue);
+    writeAudioEnabledPreference(!nextMutedValue);
+  };
 
   const playWilhelm = () => {
     if (!audioRef.current || muted) {
@@ -67,11 +84,11 @@ export default function AboutPage() {
           <button
             type="button"
             className="border border-phosphor px-3 py-2 font-mono text-xs uppercase tracking-nav text-phosphor"
-            onClick={() => setMuted((value) => !value)}
+            onClick={toggleMuted}
             aria-pressed={!muted}
             aria-label={muted ? 'Unmute Wilhelm scream effect' : 'Mute Wilhelm scream effect'}
           >
-            Audio: {muted ? 'Muted' : 'On'}
+            SFX: {muted ? 'Muted' : 'On'}
           </button>
         </div>
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
