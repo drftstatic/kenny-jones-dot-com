@@ -6,7 +6,7 @@ import { Navigation } from '@/components/Navigation';
 import { NewsTicker } from '@/components/NewsTicker';
 import { RECIndicator } from '@/components/RECIndicator';
 import { VHSTrackingLines } from '@/components/VHSTrackingLines';
-import { footerCredit } from '@/lib/content';
+import { footerCredit, footerText } from '@/lib/content';
 import './globals.css';
 
 const ibmPlexMono = IBM_Plex_Mono({
@@ -40,7 +40,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Navigation />
         <main className="mx-auto min-h-[calc(100vh-10rem)] max-w-6xl px-4 pb-32 pt-12 md:px-8">{children}</main>
         <footer className="relative z-[55] border-t border-static/40 px-4 pb-20 pt-6 text-center font-mono text-xs tracking-[0.05em] text-muted md:px-8">
-          <p>© 2026 Kenny Jones. All rights reserved.</p>
+          <p>{footerText}</p>
           <p className="mt-2">{footerCredit}</p>
         </footer>
         <NewsTicker />
