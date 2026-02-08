@@ -33,7 +33,7 @@ export function Navigation() {
         </button>
         <ul className="hidden items-center gap-4 font-mono text-[14px] tracking-nav md:flex">
           {links.map((link) => {
-            const active = pathname === link.href;
+            const active = link.href === '/' ? pathname === '/' : pathname.startsWith(link.href);
             return (
               <li key={link.href}>
                 <Link className={active ? 'underline underline-offset-4' : ''} href={link.href}>
@@ -47,7 +47,7 @@ export function Navigation() {
       {open ? (
         <ul className="border-t border-phosphor/20 px-4 py-3 font-mono text-[14px] tracking-nav md:hidden">
           {links.map((link) => {
-            const active = pathname === link.href;
+            const active = link.href === '/' ? pathname === '/' : pathname.startsWith(link.href);
             return (
               <li key={link.href} className="py-1">
                 <Link className={active ? 'underline underline-offset-4' : ''} href={link.href} onClick={() => setOpen(false)}>

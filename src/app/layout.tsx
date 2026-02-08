@@ -4,6 +4,7 @@ import { CamcorderTimestamp } from '@/components/CamcorderTimestamp';
 import { CRTFrame } from '@/components/CRTFrame';
 import { Navigation } from '@/components/Navigation';
 import { NewsTicker } from '@/components/NewsTicker';
+import { KonamiEasterEgg } from '@/components/KonamiEasterEgg';
 import { RECIndicator } from '@/components/RECIndicator';
 import { VHSTrackingLines } from '@/components/VHSTrackingLines';
 import { footerCredit, footerText } from '@/lib/content';
@@ -32,13 +33,15 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body className={`${ibmPlexMono.variable} ${inter.variable} min-h-screen bg-void font-sans text-signal`}>
+        <a href="#main-content" className="sr-only z-[100] bg-void px-4 py-2 font-mono text-xs uppercase tracking-[0.08em] text-phosphor focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:border focus:border-phosphor">Skip to content</a>
         <CRTFrame />
         <div className="scanlines" aria-hidden="true" />
         <VHSTrackingLines />
         <RECIndicator />
         <CamcorderTimestamp />
         <Navigation />
-        <main className="mx-auto min-h-[calc(100vh-10rem)] max-w-6xl px-4 pb-32 pt-12 md:px-8">{children}</main>
+        <KonamiEasterEgg />
+        <main id="main-content" className="mx-auto min-h-[calc(100vh-10rem)] max-w-6xl px-4 pb-32 pt-12 md:px-8">{children}</main>
         <footer className="relative z-[55] border-t border-static/40 px-4 pb-20 pt-6 text-center font-mono text-xs tracking-[0.05em] text-muted md:px-8">
           <p>{footerText}</p>
           <p className="mt-2">{footerCredit}</p>
