@@ -5,7 +5,7 @@ export function NewsTicker() {
 
   return (
     <div className="news-ticker" role="status" aria-label="Latest updates">
-      <div className="ticker-content font-mono text-[13px] uppercase tracking-ticker text-signal/90">{row}</div>
+      <div className="ticker-content font-mono text-[11px] uppercase tracking-ticker text-cyberCyan/80">{row}</div>
     </div>
   );
 }

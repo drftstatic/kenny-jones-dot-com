@@ -5,13 +5,13 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 const links = [
-  { href: '/', label: 'HOME' },
-  { href: '/about', label: 'ABOUT' },
-  { href: '/reel', label: 'REEL' },
-  { href: '/services', label: 'SERVICES' },
-  { href: '/testimonials', label: 'PRAISE' },
-  { href: '/blog', label: 'BLOG' },
-  { href: '/contact', label: 'CONTACT' },
+  { href: '/', label: 'HOME', code: '01' },
+  { href: '/about', label: 'ABOUT', code: '02' },
+  { href: '/reel', label: 'REEL', code: '03' },
+  { href: '/services', label: 'SERVICES', code: '04' },
+  { href: '/testimonials', label: 'PRAISE', code: '05' },
+  { href: '/blog', label: 'BLOG', code: '06' },
+  { href: '/contact', label: 'CONTACT', code: '07' },
 ];
 
 export function Navigation() {
@@ -19,24 +19,33 @@ export function Navigation() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-[65] border-b border-phosphor/20 bg-void/80 backdrop-blur-sm">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-8" aria-label="Primary navigation">
-        <span className="font-mono text-xs tracking-nav text-phosphor">KENNYJONES.COM</span>
+    <header className="fixed inset-x-0 top-0 z-[65] px-4 pt-4 md:px-8">
+      <nav className="hud-panel mx-auto flex max-w-6xl items-center justify-between px-6 py-4" aria-label="Primary navigation">
+        <div className="flex items-center gap-4">
+          <div className="h-2 w-2 bg-cyberCyan animate-pulse" />
+          <span className="font-mono text-[11px] font-bold tracking-widest text-signal">KENNYJONES.V2.0_2026</span>
+        </div>
+
         <button
           type="button"
-          className="font-mono text-sm tracking-nav text-signal md:hidden"
+          className="font-mono text-xs font-bold tracking-nav text-cyberCyan md:hidden"
           onClick={() => setOpen((value) => !value)}
           aria-label="Toggle navigation menu"
           aria-expanded={open}
         >
-          MENU
+          {open ? '[ CLOSE_NAV ]' : '[ OPEN_NAV ]'}
         </button>
-        <ul className="hidden items-center gap-4 font-mono text-[14px] tracking-nav md:flex">
+
+        <ul className="hidden items-center gap-6 font-mono text-[11px] font-bold tracking-nav md:flex">
           {links.map((link) => {
             const active = link.href === '/' ? pathname === '/' : pathname.startsWith(link.href);
             return (
-              <li key={link.href}>
-                <Link className={active ? 'underline underline-offset-4' : ''} href={link.href}>
+              <li key={link.href} className="group flex items-center gap-1">
+                <span className="text-[9px] text-muted group-hover:text-cyberCyan">{link.code}</span>
+                <Link
+                  className={`transition-colors hover:text-cyberCyan ${active ? 'text-cyberCyan' : 'text-signal/60'}`}
+                  href={link.href}
+                >
                   {link.label}
                 </Link>
               </li>
@@ -44,19 +53,27 @@ export function Navigation() {
           })}
         </ul>
       </nav>
+
       {open ? (
-        <ul className="border-t border-phosphor/20 px-4 py-3 font-mono text-[14px] tracking-nav md:hidden">
-          {links.map((link) => {
-            const active = link.href === '/' ? pathname === '/' : pathname.startsWith(link.href);
-            return (
-              <li key={link.href} className="py-1">
-                <Link className={active ? 'underline underline-offset-4' : ''} href={link.href} onClick={() => setOpen(false)}>
-                  {link.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+        <div className="hud-panel mt-2 animate-in fade-in slide-in-from-top-2 md:hidden">
+          <ul className="px-6 py-6 space-y-4 font-mono text-sm tracking-nav">
+            {links.map((link) => {
+              const active = link.href === '/' ? pathname === '/' : pathname.startsWith(link.href);
+              return (
+                <li key={link.href} className="flex items-center gap-3">
+                  <span className="text-[10px] text-muted">{link.code}</span>
+                  <Link
+                    className={`transition-colors ${active ? 'text-cyberCyan underline' : 'text-signal/80'}`}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       ) : null}
     </header>
   );

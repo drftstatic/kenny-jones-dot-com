@@ -3,13 +3,10 @@
 import { useEffect, useState } from 'react';
 
 const formatter = new Intl.DateTimeFormat('en-US', {
-  month: 'short',
-  day: '2-digit',
-  year: 'numeric',
-  hour: 'numeric',
+  hour: '2-digit',
   minute: '2-digit',
   second: '2-digit',
-  hour12: true,
+  hour12: false,
 });
 
 export function CamcorderTimestamp() {
@@ -17,8 +14,8 @@ export function CamcorderTimestamp() {
 
   useEffect(() => {
     const update = () => {
-      const formatted = formatter.format(new Date()).replace(',', '').toUpperCase();
-      setTime(formatted);
+      const formatted = formatter.format(new Date());
+      setTime(`${formatted}:00`); // Adding :00 for frame count feel
     };
 
     update();
@@ -27,5 +24,9 @@ export function CamcorderTimestamp() {
     return () => clearInterval(interval);
   }, []);
 
-  return <div className="fixed bottom-12 left-4 z-[70] hidden font-mono text-[11px] uppercase tracking-[0.05em] text-phosphor/60 md:block">{time}</div>;
+  return (
+    <div className="fixed bottom-24 left-4 z-[70] hidden font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-cyberCyan md:left-8 md:block">
+      TC: {time}
+    </div>
+  );
 }

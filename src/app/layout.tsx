@@ -42,9 +42,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Navigation />
         <KonamiEasterEgg />
         <main id="main-content" className="mx-auto min-h-[calc(100vh-10rem)] max-w-6xl px-4 pb-32 pt-12 md:px-8">{children}</main>
-        <footer className="relative z-[55] border-t border-static/40 px-4 pb-20 pt-6 text-center font-mono text-xs tracking-[0.05em] text-muted md:px-8">
-          <p>{footerText}</p>
-          <p className="mt-2">{footerCredit}</p>
+        <footer className="relative z-[55] border-t border-signal/10 px-4 pb-24 pt-12 md:px-8">
+          <div className="mx-auto max-w-6xl flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="space-y-2 text-center md:text-left">
+              <p className="text-data text-cyberCyan">SYSTEM_ORIGIN: KENNY_JONES_PRODUCTIONS_LLC</p>
+              <p className="font-mono text-[10px] uppercase tracking-widest text-muted">{footerText}</p>
+            </div>
+            <div className="text-center md:text-right">
+              <p className="text-data text-safetyOrange">SECURE_SITE // ENCRYPTED_STREAM</p>
+              <p className="mt-1 font-mono text-[10px] uppercase tracking-widest text-muted">{footerCredit}</p>
+            </div>
+          </div>
         </footer>
         <NewsTicker />
       </body>
